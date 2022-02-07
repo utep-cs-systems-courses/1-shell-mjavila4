@@ -2,6 +2,10 @@
 
 import os, sys, re
 from Prompt import Prompt
+from Library import Library
 
-Prompt.foo()
+prompt = Prompt()
+Library.add('foo', Library.foo)
+Library.get('foo')
+
 
