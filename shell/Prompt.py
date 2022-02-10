@@ -1,6 +1,5 @@
 import os
 
-
 class Prompt:
     #defPrompt = os.environ['PS1']
     defPrompt = '$'
@@ -10,7 +9,7 @@ class Prompt:
 
     def talk(self):
         user = input(self.currentPrompt+" ")
-        print(user)
+        return user
 
     def changePrompt(self, user_input):
         self.currentPrompt = user_input
