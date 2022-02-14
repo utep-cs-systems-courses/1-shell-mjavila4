@@ -1,5 +1,4 @@
 import os
-from Library import Library
 
 
 class Prompt:
@@ -11,7 +10,7 @@ class Prompt:
 
     def talk(self):
         user = input(self.currentPrompt+" ")
-        Library.get(user)
+        print(user)
 
-    def change_prompt(self, user_input):
+    def changePrompt(self, user_input):
         self.currentPrompt = user_input
