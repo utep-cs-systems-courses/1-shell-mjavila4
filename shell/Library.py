@@ -1,18 +1,15 @@
 class Library:
-    keywordDict = dict()
+
+    keyword_dict = {'change': }
 
     @classmethod
-    def foo(self):
-        print("This is foo!")
+    def to_string(cls):
+        print(cls.keywordDict)
 
     @classmethod
-    def to_string(self):
-        print(self.keywordDict)
+    def add(cls, key, data):
+        cls.keywordDict[key] = data
 
     @classmethod
-    def add(self, key, data):
-        self.keywordDict[key] = data
-
-    @classmethod
-    def get(self, key):
-        self.keywordDict[key]()
+    def get(cls, key):
+        cls.keyword_dict[key]()
