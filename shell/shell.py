@@ -5,31 +5,26 @@ from prompt import Prompt
 
 prompt = Prompt()
 
-while 1:
+pid = os.getpid()
+rc = os.fork()
 
-    pid = os.getpid()
-    rc = os.fork()
+if rc < 0:
+    os.write(2, ("fork failed, returning %d\n" % rc).encode())
+    sys.exit(1)
 
-    if rc < 0:
-        os.write(2, ("fork failed, returning %d\n" % rc).encode())
-        sys.exit(1)
+elif rc == 0:
+    while 1:
 
-    elif rc == 0:
         args = prompt.talk()
-
-        if args[0] == 'exit':
-            os.write(2, "Exiting Shell\n".encode())
-            sys.exit(1)
 
         for dir in re.split(":", os.environ['PATH']):
             program = "%s/%s" % (dir, args[0])
             try:
                 os.execve(program, args, os.environ)
             except FileNotFoundError:
-                pass
+                os.write(2, (("Child:    Could not exec %s\n" % args[0]).encode()))
 
-        os.write(2, (("Child:    Could not exec %s\n" % args[0]).encode()))
-        sys.exit(1)
+    sys.exit(1)
 
-    else:
-        childPidCode = os.wait()
+else:
+    childPidCode = os.wait()
