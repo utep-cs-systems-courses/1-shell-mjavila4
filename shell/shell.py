@@ -14,15 +14,19 @@ if rc < 0:
 
 elif rc == 0:
     while 1:
-
         args = prompt.talk()
+
+        if args[0] == 'exit':
+            break
 
         for dir in re.split(":", os.environ['PATH']):
             program = "%s/%s" % (dir, args[0])
             try:
                 os.execve(program, args, os.environ)
             except FileNotFoundError:
-                os.write(2, (("Child:    Could not exec %s\n" % args[0]).encode()))
+                pass
+
+        os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
 
     sys.exit(1)
 
