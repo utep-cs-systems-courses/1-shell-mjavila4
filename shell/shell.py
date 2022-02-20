@@ -5,10 +5,10 @@ from prompt import Prompt
 
 prompt = Prompt()
 
-pid = os.getpid()
-rc = os.fork()
-
 while 1:
+
+    pid = os.getpid()
+    rc = os.fork()
 
     if rc < 0:
         os.write(2, ("fork failed, returning %d\n" % rc).encode())
