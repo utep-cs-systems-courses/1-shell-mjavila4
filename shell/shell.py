@@ -16,6 +16,11 @@ while 1:
 
     elif rc == 0:
         args = prompt.talk()
+
+        if args[0] == 'exit':
+            os.write(2, "Exiting Shell\n".encode())
+            sys.exit(1)
+
         for dir in re.split(":", os.environ['PATH']):
             program = "%s/%s" % (dir, args[0])
             try:
