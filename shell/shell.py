@@ -20,11 +20,12 @@ while 1:
 
         if not args:
             os.write(2, "Empty Command Line\n".encode())
+            sys.exit()
 
         if args[0] == 'exit':
             sys.exit()
 
-        if args[0] == 'cd':
+        if args[0] == 'cd' and args[1]:
             ChangeDir.change(args[1])
             sys.exit()
 
