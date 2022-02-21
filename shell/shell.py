@@ -21,19 +21,19 @@ elif rc == 0:
             break
 
         if args[0] == 'cd':
-            ChangeDir.change(args[0])
-            break
+            ChangeDir.change(args[1])
 
-        for dir in re.split(":", os.environ['PATH']):
-            program = "%s/%s" % (dir, args[0])
-            try:
-                os.execve(program, args, os.environ)
-            except FileNotFoundError:
-                pass
+        else:
+            for dir in re.split(":", os.environ['PATH']):
+                program = "%s/%s" % (dir, args[0])
+                try:
+                    os.execve(program, args, os.environ)
+                except FileNotFoundError:
+                    pass
 
-        os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
+            os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
 
-    sys.exit(1)
+    #sys.exit(1)
 
 else:
     childPidCode = os.wait()
