@@ -24,7 +24,7 @@ elif rc == 0:
             ChangeDir.change(args[1])
 
         if args[0] == 'show':
-            os.write(1, os.getcwd().encode())
+            os.write(1, (os.getcwd()+"\n").encode())
 
         else:
             for dir in re.split(":", os.environ['PATH']):
