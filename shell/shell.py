@@ -26,6 +26,7 @@ elif rc == 0:
 
         if args[0] == 'show':
             os.write(1, (os.getcwd()+"\n").encode())
+            args = prompt.talk()
 
         else:
             for dir in re.split(":", os.environ['PATH']):
