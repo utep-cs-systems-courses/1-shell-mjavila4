@@ -22,6 +22,7 @@ elif rc == 0:
 
         if args[0] == 'cd':
             ChangeDir.change(args[1])
+            args = prompt.talk()
 
         if args[0] == 'show':
             os.write(1, (os.getcwd()+"\n").encode())
@@ -36,7 +37,7 @@ elif rc == 0:
 
             os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
 
-    #sys.exit(1)
+    sys.exit(1)
 
 else:
     childPidCode = os.wait()
