@@ -5,7 +5,6 @@ from prompt import Prompt
 from change_dir import ChangeDir
 
 prompt = Prompt()
-directory = os.getcwd()
 
 while 1:
 
@@ -19,18 +18,19 @@ while 1:
     elif rc == 0:
         args = prompt.talk()
 
+        if not args:
+            os.write(2, "Empty Command Line\n".encode())
+
         if args[0] == 'exit':
             sys.exit()
 
         if args[0] == 'cd':
-            directory = args[1]
-            ChangeDir.change(directory)
-            args = prompt.talk()
+            ChangeDir.change(args[1])
+            sys.exit()
 
         if args[0] == 'show':
-            os.write(1, (os.getcwd()+"\n").encode())
-            os.write(1, (os.environ['PATH']+"\n").encode())
-            args = prompt.talk()
+            os.write(1, (os.getcwd() + "\n").encode())
+            os.write(1, (os.environ['PATH'] + "\n").encode())
 
         else:
             for dir in re.split(":", os.environ['PATH']):
