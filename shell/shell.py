@@ -2,6 +2,7 @@
 
 import os, sys, re
 from prompt import Prompt
+from change_dir import ChangeDir
 
 prompt = Prompt()
 
@@ -17,6 +18,10 @@ elif rc == 0:
         args = prompt.talk()
 
         if args[0] == 'exit':
+            break
+
+        if args[0] == 'cd':
+            ChangeDir.change(args[0])
             break
 
         for dir in re.split(":", os.environ['PATH']):
