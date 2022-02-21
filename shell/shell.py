@@ -25,7 +25,7 @@ while 1:
         if args[0] == 'exit':
             sys.exit()
 
-        if args[0] == 'cd' and args[1]:
+        if args[0] == 'cd' and len(args) > 1:
             ChangeDir.change(args[1])
             sys.exit()
 
