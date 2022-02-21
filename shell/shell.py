@@ -23,6 +23,9 @@ elif rc == 0:
         if args[0] == 'cd':
             ChangeDir.change(args[1])
 
+        if args[0] == 'show':
+            os.write(1, os.getcwd().encode())
+
         else:
             for dir in re.split(":", os.environ['PATH']):
                 program = "%s/%s" % (dir, args[0])
