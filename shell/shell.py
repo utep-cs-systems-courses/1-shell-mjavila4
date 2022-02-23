@@ -3,6 +3,7 @@
 import os, sys, re
 from prompt import Prompt
 from change_dir import ChangeDir
+from redirect import Redirect
 
 prompt = Prompt()
 
@@ -33,15 +34,16 @@ while 1:
             os.write(1, (os.getcwd() + "\n").encode())
             os.write(1, (os.environ['PATH'] + "\n").encode())
 
-        else:
-            for dir in re.split(":", os.environ['PATH']):
-                program = "%s/%s" % (dir, args[0])
-                try:
-                    os.execve(program, args, os.environ)
-                except FileNotFoundError:
-                    pass
+        Redirect.checkRedirect(args)
 
-            os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
+        for dir in re.split(":", os.environ['PATH']):
+            program = "%s/%s" % (dir, args[0])
+            try:
+                os.execve(program, args, os.environ)
+            except FileNotFoundError:
+                pass
+
+        os.write(2, (("Child: Could not exec %s\n" % args[0]).encode()))
 
         sys.exit(1)
 
