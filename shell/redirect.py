@@ -26,7 +26,7 @@ class Redirect:
     @staticmethod
     def checkRedirect(args):
         index = Redirect.checkIndex(args)
-        if Redirect.checkOp(args) and len(args) >= index:
+        if Redirect.checkOp(args) and len(args) > index:
             os.close(1)
             os.open(args[index], os.O_CREAT | os.O_WRONLY)
             os.set_inheritable(1, True)
