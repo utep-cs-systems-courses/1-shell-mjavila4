@@ -31,5 +31,6 @@ class Redirect:
             os.open(args[index], os.O_CREAT | os.O_WRONLY)
             os.set_inheritable(1, True)
             args = args[:index]
-        print(args+"\n")
+        print(args)
+        print("\n")
         return args
