@@ -33,8 +33,9 @@ while 1:
         if args[0] == 'show':
             os.write(1, (os.getcwd() + "\n").encode())
             os.write(1, (os.environ['PATH'] + "\n").encode())
+            sys.exit()
 
-        Redirect.checkRedirect(args)
+        args = Redirect.checkRedirect(args)
 
         for dir in re.split(":", os.environ['PATH']):
             program = "%s/%s" % (dir, args[0])
