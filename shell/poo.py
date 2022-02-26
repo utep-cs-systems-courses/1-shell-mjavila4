@@ -24,27 +24,19 @@ if rc == 0:
             os.execve(program, args[:args.index("|")], os.environ)
         except FileNotFoundError:
             pass
-    
+
 else:
 
-    rc2 = os.fork()
+    os.wait()
 
-    if rc2 == 0:
+    os.close(0)
+    os.dup(pr)
+    line = os.read(pr, 100)
+    
+    for fd in (pw, pr):
+        os.close(fd)
 
-        os.close(0)
-        os.dup(pr)
-
-        for dire in re.split(":", os.environ['PATH']):
-            program = "%s/%s" % (dire, args[args.index("|")+1])
-        try:
-            os.execve(program, args[args.index("|")+1:], os.environ)
-        except FileNotFoundError:
-            pass
-
-    else:
-        os.wait()
-        for fd in (pw, pr):
-            os.close(fd)
+    os.write(1, line)
 
 
 
