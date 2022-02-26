@@ -16,6 +16,7 @@ for f in (pr, pw):
     os.set_inheritable(f, True)
 
 rc = os.fork()
+args = ''
 
 while 1:
 
