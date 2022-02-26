@@ -36,7 +36,7 @@ else:
         os.dup(pr)
 
         for dire in re.split(":", os.environ['PATH']):
-            program = "%s/%s" % (dire, args[0])
+            program = "%s/%s" % (dire, args[args.index("|")+1])
         try:
             os.execve(program, args[args.index("|")+1:], os.environ)
         except FileNotFoundError:
