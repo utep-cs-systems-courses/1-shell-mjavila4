@@ -3,7 +3,7 @@
 import os, sys, time, re, fileinput
 
 pid = os.getpid()
-args = ["ls", "|", "sort"]
+args = ["ls"]
 
 pr, pw = os.pipe()
 for f in (pr, pw):
@@ -18,7 +18,13 @@ if rc == 0:
     for fd in (pr, pw):
         os.close(fd)
 
-    print("Hello")
+    for dire in re.split(":", os.environ['PATH']):
+        program = "%s/%s" % (dire, args[0])
+        os.write(1, ("Child:  ...trying to exec %s\n" % program).encode())
+        try:
+            os.execve(program, args, os.environ)
+        except FileNotFoundError:
+            pass
 
 else:
 
