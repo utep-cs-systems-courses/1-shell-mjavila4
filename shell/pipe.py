@@ -34,9 +34,4 @@ class Pipe:
             for fd in (pr, pw):
                 os.close(fd)
 
-            firstArgs = args[:index-1]
-            remArgs = args[index-1:]
-
-
-
-        return firstArgs
+        return args
