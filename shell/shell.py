@@ -10,10 +10,12 @@ from pipe import Pipe
 prompt = Prompt()
 pid = os.getpid()
 
-pr,pw = os.pipe()
+pr, pw = os.pipe()
 
 for f in (pr, pw):
     os.set_inheritable(f, True)
+
+args = prompt.talk()
 
 while 1:
 
@@ -24,7 +26,6 @@ while 1:
         sys.exit(1)
 
     elif rc == 0:
-        args = prompt.talk()
 
         if not args:
             os.write(2, "Empty Command Line\n".encode())
@@ -43,8 +44,22 @@ while 1:
             sys.exit()
 
         args = Redirect.checkRedirect(args)
-        args = Pipe.checkPipe(args, pr, pw)
+        args = Pipe.checkPipe(args, pr, pw)+
         Exec.execProgram(args)
 
     else:
+
+        if '|' in args:
+            pipeFork = os.fork()
+
+            if pipeFork == 0:
+                os.close(0)
+                os.dup(pr)
+                for fd in (pw, pr):
+                    os.close(fd)
+                Exec.execProgram(args[Pipe.checkIndex(args):])
+
+            else:
+                os.wait()
+
         childPidCode = os.wait()
