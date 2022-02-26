@@ -15,11 +15,11 @@ pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
 
-args = prompt.talk()
+rc = os.fork()
 
 while 1:
 
-    rc = os.fork()
+    args = prompt.talk()
 
     if rc < 0:
         os.write(2, ("Fork Failed, Returning %d\n" % rc).encode())
