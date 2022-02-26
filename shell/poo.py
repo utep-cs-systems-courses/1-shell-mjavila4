@@ -15,9 +15,6 @@ if rc == 0:
     os.close(1)
     os.dup(pw)
 
-    for fd in (pr, pw):
-        os.close(fd)
-
     for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
         os.write(1, ("Child:  ...trying to exec %s\n" % program).encode())
@@ -25,6 +22,8 @@ if rc == 0:
             os.execve(program, args, os.environ)
         except FileNotFoundError:
             pass
+
+
 
 else:
 
