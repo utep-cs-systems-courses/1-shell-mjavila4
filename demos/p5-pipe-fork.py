@@ -37,7 +37,7 @@ else:  # parent (forked ok)
         os.close(fd)
     line = ""
     os.read(pr, line)
-    os.write(1, os.read(pr))
+    os.write(1, os.read(pr).encode())
     
     '''for line in fileinput.input():
         print("From child: <%s>" % line)'''
