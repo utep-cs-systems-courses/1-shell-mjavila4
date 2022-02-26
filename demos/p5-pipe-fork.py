@@ -35,7 +35,7 @@ else:  # parent (forked ok)
     os.dup(pr)
     for fd in (pw, pr):
         os.close(fd)
-    line = os.read(pr)
+    line = os.read(pr, 100)
     os.write(1, line.encode())
     
     '''for line in fileinput.input():
