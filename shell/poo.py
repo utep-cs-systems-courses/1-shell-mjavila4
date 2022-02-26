@@ -18,12 +18,7 @@ if rc == 0:
     for fd in (pr, pw):
         os.close(fd)
 
-    for dire in re.split(":", os.environ['PATH']):
-        program = "%s/%s" % (dire, args[0])
-        try:
-            os.execve(program, args[:args.index("|")], os.environ)
-        except FileNotFoundError:
-            pass
+    print("Hello")
 
 else:
 
@@ -32,7 +27,7 @@ else:
     os.close(0)
     os.dup(pr)
     line = os.read(pr, 100)
-    
+
     for fd in (pw, pr):
         os.close(fd)
 
