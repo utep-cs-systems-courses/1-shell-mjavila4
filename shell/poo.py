@@ -20,7 +20,6 @@ if rc == 0:
 
     for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
-        os.write(1, ("Child:  ...trying to exec %s\n" % program).encode())
         try:
             os.execve(program, args, os.environ)
         except FileNotFoundError:
