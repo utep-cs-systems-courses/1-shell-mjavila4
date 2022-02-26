@@ -46,6 +46,5 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-os.wait()
 
 
