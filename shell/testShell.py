@@ -22,7 +22,7 @@ if rc == 0:
     
 else:
     
-    oa.close(0)
+    os.close(0)
     os.dup(pr)
     for fd in (pw, pr):
         os.close(fd)
