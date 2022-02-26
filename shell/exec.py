@@ -11,4 +11,5 @@ class Exec:
                 os.execve(program, args, os.environ)
             except FileNotFoundError:
                 pass
+        os.write(2, ("Child:    Could not exec %s\n" % args[0]).encode())
         sys.exit(1)

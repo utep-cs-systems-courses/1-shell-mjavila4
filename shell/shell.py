@@ -1,16 +1,22 @@
 #! /usr/bin/env python3
 
-import os, sys, re
+import os, sys, re, fileinput
 from prompt import Prompt
 from change_dir import ChangeDir
 from redirect import Redirect
 from exec import Exec
+from pipe import Pipe
 
 prompt = Prompt()
+pid = os.getpid()
+
+pr,pw = os.pipe()
+
+for f in (pr, pw):
+    os.set_inheritable(f, True)
 
 while 1:
 
-    pid = os.getpid()
     rc = os.fork()
 
     if rc < 0:
@@ -37,6 +43,7 @@ while 1:
             sys.exit()
 
         args = Redirect.checkRedirect(args)
+        args = Pipe.checkPipe(args, pr, pw)
         Exec.execProgram(args)
 
     else:
