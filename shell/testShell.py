@@ -3,7 +3,7 @@
 import os, sys, time, re, fileinput
 
 pid = os.getpid()
-args = ''
+args = ["ls", "|", "sort"]
 
 pr, pw = os.pipe()
 for f in (pr, pw):
@@ -12,7 +12,6 @@ for f in (pr, pw):
 rc = os.fork()
 
 if rc == 0:
-    args = ["ls", "|", "sort"]
     os.close(1)
     os.dup(pw)
 
