@@ -27,10 +27,10 @@ else:
     os.close(0)
     os.dup(pr)
 
+    line = os.read(pr, 100)
+
     for fd in (pw, pr):
         os.close(fd)
-
-    line = os.read(pr, 100)
 
     os.write(1, line)
 
