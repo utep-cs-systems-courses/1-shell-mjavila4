@@ -33,12 +33,10 @@ else:  # parent (forked ok)
     print("Parent: My pid==%d.  Child's pid=%d" % (os.getpid(), rc), file=sys.stderr)
     os.close(0)
     os.dup(pr)
-    line = os.read(pr, 100)
+
     for fd in (pw, pr):
         os.close(fd)
-
-    os.write(1, line)
     
-    '''for line in fileinput.input():
-        print("From child: <%s>" % line)'''
+    for line in fileinput.input():
+        print("From child: <%s>" % line)
     
