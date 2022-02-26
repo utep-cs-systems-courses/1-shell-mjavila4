@@ -44,7 +44,7 @@ while 1:
             sys.exit()
 
         args = Redirect.checkRedirect(args)
-        args = Pipe.checkPipe(args, pr, pw)+
+        args = Pipe.checkPipe(args, pr, pw)
         Exec.execProgram(args)
 
     else:
