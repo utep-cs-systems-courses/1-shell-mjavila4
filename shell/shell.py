@@ -59,7 +59,7 @@ while 1:
                 os.dup(pr)
                 for fd in (pw, pr):
                     os.close(fd)
-                Exec.execProgram(args[args.index('|'):])
+                Exec.execProgram(args[args.index('|')+1:])
 
             else:
                 os.wait()
