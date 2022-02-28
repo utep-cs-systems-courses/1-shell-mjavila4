@@ -35,6 +35,9 @@ while 1:
             Exec.execPipe(argsList)
             sys.exit()
 
+        if '>' in args:
+            argsList = Redirect.checkRedirect(argsList)
+
         Exec.execProgram(argsList)
         sys.exit()
 
