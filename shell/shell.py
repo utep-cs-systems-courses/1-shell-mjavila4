@@ -20,6 +20,11 @@ while 1:
         sys.exit()
 
     if len(argsList) > 1 and argsList[0] == 'cd':
+
+        if argsList[1] == '..':
+            ChangeDir.back()
+            continue
+
         ChangeDir.change(argsList[1])
         continue
 
