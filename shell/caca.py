@@ -38,8 +38,8 @@ while 1:
             sys.exit()
 
         if '|' in args:
-            arg = args[:args.index('|')]
-            nextArg = args[args.index('|') + 2:]
+            firstArg = args[:args.index('|')]
+            secondArg = args[args.index('|') + 2:]
 
             rc2 = os.fork()
 

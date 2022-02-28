@@ -26,6 +26,9 @@ if rc1 == 0:
     firstArg = args[:args.index('|')]
     secondArg = args[args.index('|') + 2:]
 
+    print(firstArg)
+    print(secondArg)
+
     os.close(1)
     os.dup(pw)
     os.set_inheritable(1, True)
