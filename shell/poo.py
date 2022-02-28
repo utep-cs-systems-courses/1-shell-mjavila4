@@ -24,7 +24,6 @@ rc1 = os.fork()
 if rc1 == 0:
 
     firstArg = args[:args.index('|')]
-    print(firstArg)
     secondArg = args[args.index('|') + 2:]
 
     os.close(1)
@@ -48,7 +47,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram([secondArg.split()])
+        Exec.execProgram([secondArg.strip()])
 
     else:
         os.wait()
