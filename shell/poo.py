@@ -21,7 +21,7 @@ while 1:
 
     if len(argsList) > 1 and argsList[0] == 'cd':
         ChangeDir.change(argsList[1])
-        sys.exit()
+        continue
 
     rc = os.fork()
 
