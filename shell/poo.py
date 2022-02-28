@@ -16,7 +16,8 @@ for f in (pr, pw):
     os.set_inheritable(f, True)
 
 args = prompt.talk()
-firstArg, secondArg = ""
+firstArg = ""
+secondArg = ""
 
 rc1 = os.fork()
 
