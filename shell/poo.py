@@ -18,14 +18,12 @@ if rc == 0:
     for fd in (pr, pw):
         os.close(fd)
 
-    print("hello")
-
-    '''for dire in re.split(":", os.environ['PATH']):
+    for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
         try:
             os.execve(program, args, os.environ)
         except FileNotFoundError:
-            pass'''
+            pass
 
 else:
 
