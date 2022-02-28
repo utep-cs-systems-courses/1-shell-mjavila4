@@ -29,14 +29,24 @@ else:
 
     os.wait()
 
-    os.close(0)
-    os.dup(pr)
+    rc2 = os.fork()
 
-    for fd in (pw, pr):
-        os.close(fd)
+    if rc2 == 0:
 
-    for line in fileinput.input():
-        print("From child: <%s>" % line)
+        os.close(0)
+        os.dup(pr)
+
+        for fd in (pw, pr):
+            os.close(fd)
+
+        for line in fileinput.input():
+            print("From child: <%s>" % line)
+
+        sys.exit()
+
+    else:
+
+        os.wait()
 
 
 
