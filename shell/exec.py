@@ -18,7 +18,7 @@ class Exec:
     @staticmethod
     def execPipe(args):
 
-        prompt = Prompt()
+        #prompt = Prompt()
         pid = os.getpid()
 
         pr, pw = os.pipe()
@@ -26,15 +26,15 @@ class Exec:
         for f in (pr, pw):
             os.set_inheritable(f, True)
 
-        args = prompt.talk()
-        firstArg = ""
-        testArg = args.split()
+        #args = prompt.talk()
+        #firstArg = ""
+        #testArg = args.split()
 
         rc1 = os.fork()
 
         if rc1 == 0:
 
-            firstArg = args[:args.index('|')]
+            #firstArg = args[:args.index('|')]
 
             os.close(1)
             os.dup(pw)
@@ -43,7 +43,8 @@ class Exec:
             for fd in (pw, pr):
                 os.close(fd)
 
-            Exec.execProgram([firstArg.strip()])
+            #Exec.execProgram([firstArg.strip()])
+            Exec.execProgram(args[0])
 
         else:
 
@@ -57,7 +58,8 @@ class Exec:
                 for fd in (pw, pr):
                     os.close(fd)
 
-                Exec.execProgram([testArg[2]])
+                #Exec.execProgram([testArg[2]])
+                Exec.execProgram(args[2])
 
             else:
                 os.wait()

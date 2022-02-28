@@ -10,7 +10,6 @@ from pipe import Pipe
 prompt = Prompt()
 
 pid = os.getpid()
-pr, pw = os.pipe()
 
 while 1:
 
@@ -23,6 +22,9 @@ while 1:
     rc = os.fork()
 
     if rc == 0:
+
+        if '|' in args:
+            Exec.execPipe(argsList)
 
         Exec.execProgram(argsList)
 
