@@ -1,4 +1,6 @@
 import os, sys, re
+from prompt import Prompt
+from exec import Exec
 
 
 class Exec:
@@ -15,14 +17,7 @@ class Exec:
         sys.exit(1)
 
     @staticmethod
-        def execPipe(args):
-
-        import os, sys, re, fileinput
-        from prompt import Prompt
-        from change_dir import ChangeDir
-        from redirect import Redirect
-        from exec import Exec
-        from pipe import Pipe
+    def execPipe(args):
 
         prompt = Prompt()
         pid = os.getpid()
@@ -72,4 +67,3 @@ class Exec:
                 os.close(fd)
 
             os.wait()
-
