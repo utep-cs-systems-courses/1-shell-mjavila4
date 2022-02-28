@@ -19,16 +19,17 @@ while 1:
     if argsList[0] == 'exit':
         sys.exit()
 
+    if len(argsList) > 1 and argsList[0] == 'cd':
+        ChangeDir.change(argsList[1])
+        sys.exit()
+
     rc = os.fork()
 
     if rc == 0:
 
-        if len(argsList) > 1 and argsList[0] == 'cd':
-            ChangeDir.change(argsList[1])
-            sys.exit()
-
         if argsList[0] == 'show':
             os.write(1, os.getcwd().encode())
+            sys.exit()
 
         if '|' in args:
             Exec.execPipe(argsList)
