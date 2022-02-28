@@ -25,8 +25,10 @@ while 1:
 
         if '|' in args:
             Exec.execPipe(argsList)
+            sys.exit()
 
         Exec.execProgram(argsList)
+        sys.exit()
 
     else:
         os.wait()
