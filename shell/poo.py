@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import os, fileinput
+import os, fileinput, re
 
 pid = os.getpid()
 args = ["wc", "poo.py"]
