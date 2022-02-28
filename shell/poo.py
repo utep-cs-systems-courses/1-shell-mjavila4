@@ -36,7 +36,7 @@ if rc1 == 0:
     for fd in (pw, pr):
         os.close(fd)
 
-    Exec.execProgram(testArg[2])
+    Exec.execProgram([testArg[2]])
 
 else:
 
