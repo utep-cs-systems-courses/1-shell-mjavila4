@@ -25,7 +25,7 @@ if rc1 == 0:
 
     firstArg = args[:args.index('|')]
     tempArg = args[args.index('|')+2:]
-    secondArg = args[:args.index(' ')]
+    secondArg = tempArg[:args.index(' ')]
     print(secondArg)
 
     os.close(1)
