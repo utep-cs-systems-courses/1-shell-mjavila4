@@ -26,9 +26,6 @@ if rc1 == 0:
     firstArg = args[:args.index('|')]
     secondArg = args[args.index('|') + 2:]
 
-    print(firstArg)
-    print(secondArg)
-
     os.close(1)
     os.dup(pw)
     os.set_inheritable(1, True)
@@ -36,7 +33,7 @@ if rc1 == 0:
     for fd in (pw, pr):
         os.close(fd)
 
-    Exec.execProgram([firstArg])
+    Exec.execProgram(["ls"])
 
 else:
 
@@ -50,7 +47,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram([secondArg])
+        Exec.execProgram(["sort"])
 
     else:
         os.wait()
