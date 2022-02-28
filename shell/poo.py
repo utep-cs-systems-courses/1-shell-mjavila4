@@ -5,11 +5,11 @@ import os, sys, time, re, fileinput
 pid = os.getpid()
 args = ["wc", "poo.py"]
 
+rc = os.fork()
+
 pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
-
-rc = os.fork()
 
 if rc == 0:
     os.close(1)
