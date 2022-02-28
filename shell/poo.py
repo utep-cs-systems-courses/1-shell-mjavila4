@@ -14,11 +14,10 @@ rc = os.fork()
 if rc == 0:
     os.close(1)
     os.dup(pw)
+    os.set_inheritable(1, True)
 
     for fd in (pr, pw):
         os.close(fd)
-
-    print("hello")
 
     for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
@@ -29,10 +28,9 @@ if rc == 0:
 
 else:
 
-    os.wait()
-
     os.close(0)
     os.dup(pr)
+    os.set_inheritable(0, True)
 
     for fd in (pw, pr):
         os.close(fd)
