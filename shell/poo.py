@@ -18,6 +18,7 @@ for f in (pr, pw):
 args = prompt.talk()
 firstArg = ""
 secondArg = ""
+testArg = args.split()
 
 rc1 = os.fork()
 
@@ -35,7 +36,7 @@ if rc1 == 0:
     for fd in (pw, pr):
         os.close(fd)
 
-    Exec.execProgram([firstArg.strip()])
+    Exec.execProgram(testArg[2])
 
 else:
 
