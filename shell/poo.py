@@ -53,7 +53,7 @@ while 1:
                     for fd in (pw, pr):
                         os.close(fd)
                     
-                    Exec.execProgram(nextArg)
+                    Exec.execProgram(nextArg.split())
 
                 else:
                     os.close(0)
