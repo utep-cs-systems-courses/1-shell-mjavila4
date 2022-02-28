@@ -44,7 +44,7 @@ class Exec:
                 os.close(fd)
 
             #Exec.execProgram([firstArg.strip()])
-            Exec.execProgram(args[0])
+            Exec.execProgram([args[0]])
 
         else:
 
@@ -59,7 +59,7 @@ class Exec:
                     os.close(fd)
 
                 #Exec.execProgram([testArg[2]])
-                Exec.execProgram(args[2])
+                Exec.execProgram([args[2]])
 
             else:
                 os.wait()
