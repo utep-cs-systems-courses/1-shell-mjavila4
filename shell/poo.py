@@ -20,32 +20,32 @@ args2 = 'sort'
 
 rc1 = os.fork()
 
-    if rc1 == 0:
+if rc1 == 0:
 
-        os.close(1)
-        os.dup(pw)
-        os.set_inheritable(1, True)
+    os.close(1)
+    os.dup(pw)
+    os.set_inheritable(1, True)
+
+    for fd in (pw, pr):
+        os.close(fd)
+
+    Exec.execProgram(arg.split())
+
+else:
+
+    os.wait()
+    rc2 = os.fork()
+
+    if rc2 == 0:
+        os.close(0)
+        os.dup(pr)
+        os.set_inheritable(0, True)
 
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram(arg.split())
+        Exec.execProgram(nextArg.split())
 
     else:
-
         os.wait()
-        rc2 = os.fork()
-
-        if rc2 == 0:
-            os.close(0)
-            os.dup(pr)
-            os.set_inheritable(0, True)
-
-            for fd in (pw, pr):
-                os.close(fd)
-
-            Exec.execProgram(nextArg.split())
-
-        else:
-            os.wait()
-            sys.exit()
+        sys.exit()
