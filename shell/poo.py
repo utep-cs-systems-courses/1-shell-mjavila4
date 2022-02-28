@@ -15,66 +15,37 @@ pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
 
-args = ''
-argsList = []
+args1 = 'ls'
+args2 = 'sort'
 
-while 1:
+rc1 = os.fork()
 
-    rc = os.fork()
+    if rc1 == 0:
 
-    if rc == 0:
+        os.close(1)
+        os.dup(pw)
+        os.set_inheritable(1, True)
 
-        args = prompt.talk()
+        for fd in (pw, pr):
+            os.close(fd)
 
-        if args[0] == 'exit':
-            sys.exit()
-
-        if not args:
-            os.write(2, "Empty Command Line\n".encode())
-            sys.exit()
-
-        if args[0] == 'cd' and len(args) > 1:
-            ChangeDir.change(args[1])
-            sys.exit()
-
-        if '|' in args:
-            arg = args[:args.index('|')]
-            nextArg = args[args.index('|') + 2:]
-
-            rc2 = os.fork()
-
-            if rc2 == 0:
-                os.close(1)
-                os.dup(pw)
-                os.set_inheritable(1, True)
-
-                for fd in (pw, pr):
-                    os.close(fd)
-
-                Exec.execProgram(arg.split())
-
-            else:
-                os.wait()
-                rc3 = os.fork()
-
-                if rc3 == 0:
-                    os.close(0)
-                    os.dup(pr)
-                    os.set_inheritable(0, True)
-
-                    for fd in (pw, pr):
-                        os.close(fd)
-
-                    Exec.execProgram(nextArg.split())
-
-                else:
-                    os.wait()
-
-                for fd in (pw, pr):
-                    os.close(fd)
-
-                os.wait()
+        Exec.execProgram(arg.split())
 
     else:
+
         os.wait()
-        sys.exit()
+        rc2 = os.fork()
+
+        if rc2 == 0:
+            os.close(0)
+            os.dup(pr)
+            os.set_inheritable(0, True)
+
+            for fd in (pw, pr):
+                os.close(fd)
+
+            Exec.execProgram(nextArg.split())
+
+        else:
+            os.wait()
+            sys.exit()
