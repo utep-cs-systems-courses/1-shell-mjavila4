@@ -15,8 +15,8 @@ pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
 
-args1 = 'ls'
-args2 = 'sort'
+args1 = ['ls']
+args2 = ['sort']
 
 rc1 = os.fork()
 
