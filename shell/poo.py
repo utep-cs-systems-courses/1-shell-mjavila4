@@ -20,14 +20,14 @@ argsList = []
 
 while 1:
 
-    args = prompt.talk()
-
     if args[0] == 'exit':
         sys.exit()
 
     rc = os.fork()
 
     if rc == 0:
+
+        args = prompt.talk()
 
         if not args:
             os.write(2, "Empty Command Line\n".encode())
