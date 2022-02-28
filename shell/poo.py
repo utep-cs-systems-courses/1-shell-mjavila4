@@ -56,16 +56,27 @@ while 1:
                 Exec.execProgram(arg.split())
 
             else:
-                os.wait(2)
-                os.close(0)
-                os.dup(pr)
-                os.set_inheritable(0, True)
-                for fd in (pw, pr):
-                    os.close(fd)
-                print("Second exec\n")
-                Exec.execProgram(nextArg.split())
+                rc3 = os.fork()
+
+                if rc3 == 0:
+                    os.close(0)
+                    os.dup(pr)
+                    os.set_inheritable(0, True)
+
+                    for fd in (pw, pr):
+                        os.close(fd)
+
+                    Exec.execProgram(nextArg.split())
+
+                else:
+                    os.wait()
+            os.wait()
+
+
+
+
 
     else:
         print("Wait\n")
-        os.wait(1)
+        os.wait()
         sys.exit()
