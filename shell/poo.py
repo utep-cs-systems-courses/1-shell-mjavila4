@@ -6,15 +6,16 @@ pid = os.getpid()
 args = ["wc", "poo.py"]
 
 pr, pw = os.pipe()
-for f in (pr, pw):
-    os.set_inheritable(f, True)
 
 rc = os.fork()
+
+for f in (pr, pw):
+    os.set_inheritable(f, True)
 
 if rc == 0:
     os.close(1)
     os.dup(pw)
-    os.set_inheritable(1, True)
+    #os.set_inheritable(1, True)
 
     for fd in (pr, pw):
         os.close(fd)
@@ -30,7 +31,7 @@ else:
 
     os.close(0)
     os.dup(pr)
-    os.set_inheritable(0, True)
+    #os.set_inheritable(0, True)
 
     for fd in (pw, pr):
         os.close(fd)
