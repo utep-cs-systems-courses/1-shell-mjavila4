@@ -48,7 +48,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram(["sort"])
+        Exec.execProgram([secondArg.split()])
 
     else:
         os.wait()
