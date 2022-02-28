@@ -25,6 +25,7 @@ if rc1 == 0:
 
     firstArg = args[:args.index('|')]
     secondArg = args[args.index('|') + 2:]
+    print(secondArg)
 
     os.close(1)
     os.dup(pw)
@@ -47,7 +48,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram([secondArg.strip()])
+        Exec.execProgram([secondArg])
 
     else:
         os.wait()
