@@ -36,7 +36,7 @@ if rc1 == 0:
     for fd in (pw, pr):
         os.close(fd)
 
-    Exec.execProgram([testArg[2]])
+    Exec.execProgram([firstArg.strip()])
 
 else:
 
@@ -50,7 +50,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram([secondArg.strip()])
+        Exec.execProgram([testArg[2]])
 
     else:
         os.wait()
