@@ -24,7 +24,7 @@ rc1 = os.fork()
 if rc1 == 0:
 
     firstArg = args[:args.index('|')]
-    secondArg = args[args.index('|') + 1:]
+    secondArg = args[args.index('|') + 1:args.index('|') + 2]
 
     os.close(1)
     os.dup(pw)
