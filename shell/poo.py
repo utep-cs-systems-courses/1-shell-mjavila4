@@ -28,7 +28,7 @@ while 1:
     if rc == 0:
 
         if argsList[0] == 'show':
-            os.write(1, os.getcwd().encode())
+            os.write(1, os.getcwd()+"\n".encode())
             sys.exit()
 
         if '|' in args:
