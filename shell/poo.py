@@ -1,63 +1,87 @@
 #! /usr/bin/env python3
 
-import os, fileinput, re
+import os, sys, re, fileinput
+from prompt import Prompt
+from change_dir import ChangeDir
+from redirect import Redirect
+from exec import Exec
+from pipe import Pipe
 
+prompt = Prompt()
 pid = os.getpid()
-args = ["wc", "poo.py"]
 
 pr, pw = os.pipe()
+
 for f in (pr, pw):
     os.set_inheritable(f, True)
 
-rc = os.fork()
+args = ''
+argsList = []
 
-if rc == 0:
-    os.close(1)
-    os.dup(pw)
-    os.set_inheritable(1, True)
+while 1:
 
-    for fd in (pr, pw):
-        os.close(fd)
+    args = prompt.talk()
 
-    for dire in re.split(":", os.environ['PATH']):
-        program = "%s/%s" % (dire, args[0])
-        try:
-            os.execve(program, args, os.environ)
-        except FileNotFoundError:
-            pass
-
-else:
-
-    os.close(0)
-    os.dup(pr)
-    os.set_inheritable(0, True)
-
-    for fd in (pw, pr):
-        os.close(fd)
-
-    for line in fileinput.input():
-        print("From child: <%s>" % line)
-
-    '''
-
-    rc2 = os.fork()
-
-    if rc2 == 0:
-
-        os.close(0)
-        os.dup(pr)
-
-        for fd in (pw, pr):
-            os.close(fd)
-
-        for line in fileinput.input():
-            print("From child: <%s>" % line)
-
+    if args[0] == 'exit':
         sys.exit()
+    
+    rc = os.fork()
+    
+    if rc == 0:
+        
+        if not args:
+            os.write(2, "Empty Command Line\n".encode())
+            sys.exit()
 
-    else:
+        if args[0] == 'cd' and len(args) > 1:
+            ChangeDir.change(args[1])
+            sys.exit()
+            
+        if '|' in args:
+            while '|' in args:
+                nextArg = args[:args.index('|')]
+                argsList.append(nextArg)
+                args = args[args.index('|') + 2:]
 
-        os.wait()'''
+                rc2 = os.fork()
+                
+                if rc2 == 0:
+                    os.close(1)
+                    os.dup(pw)
+                    os.set_inheritable(1, True)
+
+                    for fd in (pw, pr):
+                        os.close(fd)
+                    
+                    Exec.execProgram(nextArg)
+
+                else:
+                    os.close(0)
+                    os.dup(pr)
+                    os.set_inheritable(0, True)
+                    for fd in (pw, pr):
+                        os.close(fd)
+                    os.wait()
+
+            argsList.append(args)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

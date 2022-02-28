@@ -7,7 +7,7 @@ class Prompt:
 
     def talk(self):
         user = input(self.currentPrompt + " ")
-        return user.split()
+        return user
 
     def changePrompt(self, user_input):
         self.currentPrompt = user_input
