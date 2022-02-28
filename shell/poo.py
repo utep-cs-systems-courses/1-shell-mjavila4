@@ -24,11 +24,11 @@ while 1:
 
     if args[0] == 'exit':
         sys.exit()
-    
+
     rc = os.fork()
-    
+
     if rc == 0:
-        
+
         if not args:
             os.write(2, "Empty Command Line\n".encode())
             sys.exit()
@@ -36,12 +36,11 @@ while 1:
         if args[0] == 'cd' and len(args) > 1:
             ChangeDir.change(args[1])
             sys.exit()
-            
+
         if '|' in args:
 
             arg = args[:args.index('|')]
-            args = args[args.index('|') + 2:]
-            nextArg = args[:args.index('|')]
+            nextArg = args[args.index('|') + 2:]
 
             rc2 = os.fork()
 
@@ -66,25 +65,3 @@ while 1:
 
     else:
         os.wait()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
