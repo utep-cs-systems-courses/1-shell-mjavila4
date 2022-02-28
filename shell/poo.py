@@ -54,6 +54,7 @@ while 1:
                 Exec.execProgram(arg.split())
 
             else:
+                os.wait()
                 rc3 = os.fork()
 
                 if rc3 == 0:
