@@ -25,6 +25,7 @@ if rc1 == 0:
 
     firstArg = args[:args.index('|')]
     secondArg = args[args.index('|')+2:args.index('|')+3]
+    print(secondArg)
 
     os.close(1)
     os.dup(pw)
