@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
-import os
-import re
+import os, fileinput
 
 pid = os.getpid()
 args = ["wc", "poo.py"]
@@ -32,7 +31,16 @@ else:
 
     os.wait()
 
-    '''os.wait()
+    os.close(0)
+    os.dup(pr)
+
+    for fd in (pw, pr):
+        os.close(fd)
+
+    for line in fileinput.input():
+        print("From child: <%s>" % line)
+
+    '''
 
     rc2 = os.fork()
 
