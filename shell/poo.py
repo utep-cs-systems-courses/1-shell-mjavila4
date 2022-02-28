@@ -1,15 +1,16 @@
 #! /usr/bin/env python3
 
-import os, sys, time, re, fileinput
+import os
+import re
 
 pid = os.getpid()
 args = ["wc", "poo.py"]
 
-rc = os.fork()
-
 pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
+
+rc = os.fork()
 
 if rc == 0:
     os.close(1)
@@ -18,12 +19,14 @@ if rc == 0:
     for fd in (pr, pw):
         os.close(fd)
 
-    for dire in re.split(":", os.environ['PATH']):
+    print("hello")
+
+    '''for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
         try:
             os.execve(program, args, os.environ)
         except FileNotFoundError:
-            pass
+            pass'''
 
 else:
 
