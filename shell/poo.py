@@ -40,7 +40,6 @@ while 1:
         if '|' in args:
 
             arg = args[:args.index('|')]
-            argsList.append(nextArg)
             args = args[args.index('|') + 2:]
             nextArg = args[:args.index('|')]
 
