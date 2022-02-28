@@ -17,7 +17,6 @@ for f in (pr, pw):
 
 args = prompt.talk()
 firstArg = ""
-secondArg = ""
 testArg = args.split()
 
 rc1 = os.fork()
@@ -25,9 +24,6 @@ rc1 = os.fork()
 if rc1 == 0:
 
     firstArg = args[:args.index('|')]
-    tempArg = args[args.index('|')+2:]
-    secondArg = tempArg[:args.index(' ')]
-    print(secondArg)
 
     os.close(1)
     os.dup(pw)
