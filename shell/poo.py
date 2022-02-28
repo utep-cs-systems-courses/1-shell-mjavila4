@@ -15,8 +15,8 @@ if rc == 0:
     os.close(1)
     os.dup(pw)
 
-    #for fd in (pr, pw):
-        #os.close(fd)
+    for fd in (pr, pw):
+        os.close(fd)
 
     for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
@@ -28,6 +28,8 @@ if rc == 0:
 else:
 
     os.wait()
+
+    '''os.wait()
 
     rc2 = os.fork()
 
@@ -46,7 +48,7 @@ else:
 
     else:
 
-        os.wait()
+        os.wait()'''
 
 
 
