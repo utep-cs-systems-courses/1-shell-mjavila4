@@ -24,7 +24,8 @@ rc1 = os.fork()
 if rc1 == 0:
 
     firstArg = args[:args.index('|')]
-    secondArg = args[args.index('|')+2:args.index('|')+3]
+    tempArg = args[args.index('|')+2:]
+    secondArg = args[:args.index(' ')]
     print(secondArg)
 
     os.close(1)
