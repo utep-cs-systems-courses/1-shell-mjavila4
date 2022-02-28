@@ -20,4 +20,4 @@ class ChangeDir:
         for match in matches:
             last_match = match
 
-        os.chdir(os.getcwd()[:match.span()[0]])
+        os.chdir(os.getcwd()[:last_match.span()[0]])
