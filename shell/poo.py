@@ -48,7 +48,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram([secondArg])
+        Exec.execProgram([secondArg.replace(" ", "").strip()])
 
     else:
         os.wait()
