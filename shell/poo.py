@@ -55,13 +55,13 @@ while 1:
                 Exec.execProgram(arg.split())
 
             else:
+                os.wait()
                 os.close(0)
                 os.dup(pr)
                 os.set_inheritable(0, True)
                 for fd in (pw, pr):
                     os.close(fd)
                 Exec.execProgram(nextArg.split())
-                os.wait()
 
     else:
         os.wait()
