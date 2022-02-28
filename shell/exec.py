@@ -13,3 +13,63 @@ class Exec:
                 pass
         os.write(2, ("Child:    Could not exec %s\n" % args[0]).encode())
         sys.exit(1)
+
+    @staticmethod
+        def execPipe(args):
+
+        import os, sys, re, fileinput
+        from prompt import Prompt
+        from change_dir import ChangeDir
+        from redirect import Redirect
+        from exec import Exec
+        from pipe import Pipe
+
+        prompt = Prompt()
+        pid = os.getpid()
+
+        pr, pw = os.pipe()
+
+        for f in (pr, pw):
+            os.set_inheritable(f, True)
+
+        args = prompt.talk()
+        firstArg = ""
+        testArg = args.split()
+
+        rc1 = os.fork()
+
+        if rc1 == 0:
+
+            firstArg = args[:args.index('|')]
+
+            os.close(1)
+            os.dup(pw)
+            os.set_inheritable(1, True)
+
+            for fd in (pw, pr):
+                os.close(fd)
+
+            Exec.execProgram([firstArg.strip()])
+
+        else:
+
+            rc2 = os.fork()
+
+            if rc2 == 0:
+                os.close(0)
+                os.dup(pr)
+                os.set_inheritable(0, True)
+
+                for fd in (pw, pr):
+                    os.close(fd)
+
+                Exec.execProgram([testArg[2]])
+
+            else:
+                os.wait()
+
+            for fd in (pw, pr):
+                os.close(fd)
+
+            os.wait()
+
