@@ -33,7 +33,6 @@ if rc1 == 0:
 
 else:
 
-    os.wait()
     rc2 = os.fork()
 
     if rc2 == 0:
@@ -48,4 +47,8 @@ else:
 
     else:
         os.wait()
-        sys.exit()
+
+    for fd in (pw, pr):
+        os.close(fd)
+
+    os.wait()
