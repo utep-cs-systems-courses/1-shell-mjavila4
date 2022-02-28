@@ -41,9 +41,6 @@ while 1:
             arg = args[:args.index('|')]
             nextArg = args[args.index('|') + 2:]
 
-            for fd in (pw, pr):
-                os.close(fd)
-
             rc2 = os.fork()
 
             if rc2 == 0:
