@@ -15,12 +15,15 @@ pr, pw = os.pipe()
 for f in (pr, pw):
     os.set_inheritable(f, True)
 
-args1 = ['ls']
-args2 = ['sort']
+args = prompt.talk()
+firstArg, secondArg = ""
 
 rc1 = os.fork()
 
 if rc1 == 0:
+
+    firstArg = args[:args.index('|')]
+    secondArg = args[args.index('|') + 2:]
 
     os.close(1)
     os.dup(pw)
@@ -29,7 +32,7 @@ if rc1 == 0:
     for fd in (pw, pr):
         os.close(fd)
 
-    Exec.execProgram(args1)
+    Exec.execProgram(firstArg.split())
 
 else:
 
@@ -43,7 +46,7 @@ else:
         for fd in (pw, pr):
             os.close(fd)
 
-        Exec.execProgram(args2)
+        Exec.execProgram(secondArg.split())
 
     else:
         os.wait()
