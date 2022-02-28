@@ -38,32 +38,36 @@ while 1:
             sys.exit()
             
         if '|' in args:
-            while '|' in args:
-                nextArg = args[:args.index('|')]
-                argsList.append(nextArg)
-                args = args[args.index('|') + 2:]
 
-                rc2 = os.fork()
-                
-                if rc2 == 0:
-                    os.close(1)
-                    os.dup(pw)
-                    os.set_inheritable(1, True)
+            arg = args[:args.index('|')]
+            argsList.append(nextArg)
+            args = args[args.index('|') + 2:]
+            nextArg = args[:args.index('|')]
 
-                    for fd in (pw, pr):
-                        os.close(fd)
-                    
-                    Exec.execProgram(nextArg.split())
+            rc2 = os.fork()
 
-                else:
-                    os.close(0)
-                    os.dup(pr)
-                    os.set_inheritable(0, True)
-                    for fd in (pw, pr):
-                        os.close(fd)
-                    os.wait()
+            if rc2 == 0:
+                os.close(1)
+                os.dup(pw)
+                os.set_inheritable(1, True)
 
-            argsList.append(args)
+                for fd in (pw, pr):
+                    os.close(fd)
+
+                Exec.execProgram(arg.split())
+
+            else:
+                os.close(0)
+                os.dup(pr)
+                os.set_inheritable(0, True)
+                for fd in (pw, pr):
+                    os.close(fd)
+                Exec.execProgram(nextArg.split())
+                os.wait()
+
+    else:
+        os.wait()
+
 
 
 
