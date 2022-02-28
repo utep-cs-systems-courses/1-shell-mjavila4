@@ -56,7 +56,7 @@ while 1:
                 Exec.execProgram(arg.split())
 
             else:
-                os.wait()
+                os.wait(2)
                 os.close(0)
                 os.dup(pr)
                 os.set_inheritable(0, True)
@@ -67,5 +67,5 @@ while 1:
 
     else:
         print("Wait\n")
-        os.wait()
+        os.wait(1)
         sys.exit()
