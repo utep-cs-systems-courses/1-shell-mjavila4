@@ -38,9 +38,11 @@ while 1:
             sys.exit()
 
         if '|' in args:
-            print("inside pipe if\n")
             arg = args[:args.index('|')]
             nextArg = args[args.index('|') + 2:]
+
+            for fd in (pw, pr):
+                os.close(fd)
 
             rc2 = os.fork()
 
@@ -52,7 +54,6 @@ while 1:
                 for fd in (pw, pr):
                     os.close(fd)
 
-                print("First exec\n")
                 Exec.execProgram(arg.split())
 
             else:
@@ -70,13 +71,12 @@ while 1:
 
                 else:
                     os.wait()
-            os.wait()
 
+                for fd in (pw, pr):
+                    os.close(fd)
 
-
-
+                os.wait()
 
     else:
-        print("Wait\n")
         os.wait()
         sys.exit()
