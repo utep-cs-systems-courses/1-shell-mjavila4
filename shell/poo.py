@@ -18,6 +18,8 @@ if rc == 0:
     for fd in (pr, pw):
         os.close(fd)
 
+    print("hello")
+
     for dire in re.split(":", os.environ['PATH']):
         program = "%s/%s" % (dire, args[0])
         try:
