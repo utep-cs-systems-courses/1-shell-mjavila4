@@ -1,6 +1,5 @@
 import os, sys, re
 from prompt import Prompt
-from exec import Exec
 
 
 class Exec:
