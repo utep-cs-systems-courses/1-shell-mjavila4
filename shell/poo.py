@@ -62,7 +62,7 @@ while 1:
                 os.set_inheritable(0, True)
                 for fd in (pw, pr):
                     os.close(fd)
-                print("First exec\n")
+                print("Second exec\n")
                 Exec.execProgram(nextArg.split())
 
     else:
