@@ -8,60 +8,38 @@ from exec import Exec
 from pipe import Pipe
 
 prompt = Prompt()
+
 pid = os.getpid()
-
-pr, pw = os.pipe()
-
-for f in (pr, pw):
-    os.set_inheritable(f, True)
-
-args = ''
 
 while 1:
 
     args = prompt.talk()
+    argsList = args.split()
+
+    if argsList[0] == 'exit':
+        sys.exit()
+
+    if len(argsList) > 1 and argsList[0] == 'cd':
+        ChangeDir.change(argsList[1])
+        continue
 
     rc = os.fork()
 
-    if rc < 0:
-        os.write(2, ("Fork Failed, Returning %d\n" % rc).encode())
-        sys.exit(1)
+    if rc == 0:
 
-    elif rc == 0:
-
-        if not args:
-            os.write(2, "Empty Command Line\n".encode())
-            sys.exit()
-
-        if args[0] == 'exit':
-            sys.exit()
-
-        if args[0] == 'cd' and len(args) > 1:
-            ChangeDir.change(args[1])
-            sys.exit()
-
-        if args[0] == 'show':
+        if argsList[0] == 'show':
             os.write(1, (os.getcwd() + "\n").encode())
-            os.write(1, (os.environ['PATH'] + "\n").encode())
             sys.exit()
-
-        args = Redirect.checkRedirect(args)
-        args = Pipe.checkPipe(args, pr, pw)
-        Exec.execProgram(args)
-
-    else:
 
         if '|' in args:
-            pipeFork = os.fork()
+            Exec.execPipe(argsList)
+            sys.exit()
 
-            if pipeFork == 0:
-                os.close(0)
-                os.dup(pr)
-                for fd in (pw, pr):
-                    os.close(fd)
-                Exec.execProgram(args[args.index('|')+1:])
+        if '>' in args:
+            argsList = Redirect.checkRedirect(argsList)
 
-            else:
-                os.wait()
+        Exec.execProgram(argsList)
+        sys.exit()
 
-        childPidCode = os.wait()
+    else:
+        os.wait()
